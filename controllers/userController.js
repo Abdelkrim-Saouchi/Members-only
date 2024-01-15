@@ -26,6 +26,11 @@ exports.createUserPost = [
     .trim()
     .isLength({ min: 1 })
     .escape(),
+  body("passwordConfirmation")
+    .custom((value, { req }) => {
+      return value === req.body.password;
+    })
+    .withMessage("Confirmation password does not match"),
   async (req, res, next) => {
     const errors = validationResult(req);
 
