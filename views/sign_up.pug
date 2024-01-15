@@ -1,0 +1,28 @@
+extends layout 
+
+block content 
+  h2(class="mb-2 text-xl md:text-3xl font-bold") Sing up 
+  form(class="p-6 flex flex-col border border-gray-100 rounded shadow-md md:min-w-96", action="", method="post")
+    div(class="flex flex-col mb-2") 
+      label(class="opacity-70", for="firstName") First Name: 
+      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="John", type="text", id="firstName", name="firstName")
+    div(class="flex flex-col mb-2") 
+      label(class="opacity-70", for="lastName") Last Name: 
+      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="Smith", type="text", id="lastName", name="lastName")
+
+    div(class="flex flex-col mb-2") 
+      label(class="opacity-70", for="userName") Username: 
+      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="Thiazine", type="text", id="userName", name="userName")
+
+    div(class="flex flex-col mb-2") 
+      label(class="opacity-70", for="email") Email: 
+      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="example@example.com", type="email", id="email", name="email") 
+
+    div(class="flex flex-col mb-2") 
+      label(class="opacity-70", for="password") Password: 
+      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", type="password", id="password", name="password") 
+    div(class="flex flex-col mb-2") 
+      label(class="opacity-70", for="passwordConfirmation") Password Confirmation: 
+      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", type="password", id="passwordConfirmation", name="passwordConfirmation") 
+
+    button(class="p-2 mt-4 bg-black text-white font-bold rounded-lg border border-black hover:bg-white hover:text-black focus:bg-white focus:text-black" type="submit") Register  

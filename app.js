@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const indexRouter = require("./routes/index");
+const signUpRouter = require("./routes/sign-up");
 
 const app = express();
 
@@ -30,6 +31,7 @@ async function main() {
 }
 
 app.use("/", indexRouter);
+app.use("/sign-up", signUpRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
