@@ -1,22 +1,28 @@
 extends layout 
 
 block content 
-  h2(class="mb-2 text-xl md:text-3xl font-bold") Sing up 
+  h2(class="mb-2 text-xl md:text-3xl font-bold") Sing up
+
+  if errors 
+      ul(class="mt-2 mb-4 p-2 text-red-600 list-disc list-inside border border-gray-100 rounded shadow-md md:min-w-96") 
+        for error in errors 
+          li!= error.msg 
+   
   form(class="p-6 flex flex-col border border-gray-100 rounded shadow-md md:min-w-96", action="", method="post")
     div(class="flex flex-col mb-2") 
       label(class="opacity-70", for="firstName") First Name: 
-      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="John", type="text", id="firstName", name="firstName")
+      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="John", type="text", id="firstName", name="firstName", value=(user === undefined? '' : user.firstName))
     div(class="flex flex-col mb-2") 
       label(class="opacity-70", for="lastName") Last Name: 
-      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="Smith", type="text", id="lastName", name="lastName")
+      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="Smith", type="text", id="lastName", name="lastName", value=(user === undefined? '' : user.lastName))
 
     div(class="flex flex-col mb-2") 
       label(class="opacity-70", for="userName") Username: 
-      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="Thiazine", type="text", id="userName", name="userName")
+      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="Thiazine", type="text", id="userName", name="userName", value=(user === undefined? '' : user.userName))
 
     div(class="flex flex-col mb-2") 
       label(class="opacity-70", for="email") Email: 
-      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="example@example.com", type="email", id="email", name="email") 
+      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="example@example.com", type="email", id="email", name="email", value=(user === undefined? '' : user.email)) 
 
     div(class="flex flex-col mb-2") 
       label(class="opacity-70", for="password") Password: 
