@@ -1,6 +1,5 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  h2(class="text-3xl font-bold") Mermbers Only
+  h2(class="mb-2 text-xl md:text-3xl font-bold") Welcome to our #[span(class="text-red-600") Private club] 
+  p(class="font-semibold") Please before joining the club read #[a(class="text-blue-600", href="/rules") the rules.]
