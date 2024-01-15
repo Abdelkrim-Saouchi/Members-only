@@ -1,0 +1,14 @@
+extends layout 
+
+block content 
+  h2(class="mb-2 text-xl md:text-3xl font-bold") Login 
+  form(class="p-6 flex flex-col border border-gray-100 rounded shadow-md md:min-w-96", action="", method="post")
+    div(class="flex flex-col mb-2") 
+      label(class="opacity-70", for="email") Email: 
+      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="example@example.com", type="email", id="email", name="email") 
+
+    div(class="flex flex-col mb-2") 
+      label(class="opacity-70", for="password") Password: 
+      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", type="password", id="password", name="password")
+
+    button(class="p-2 mt-4 bg-black text-white font-bold rounded-lg border border-black hover:bg-white hover:text-black focus:bg-white focus:text-black" type="submit") Login  
