@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const { body, validationResult } = require("express-validator");
 const passport = require("passport");
+const bcrypt = require("bcryptjs");
 
 // ------Sign up route-----------------
 // Get request to display Sign up form
@@ -35,28 +36,32 @@ exports.createUserPost = [
   async (req, res, next) => {
     const errors = validationResult(req);
 
-    const user = new User({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      userName: req.body.userName,
-      email: req.body.email,
-      password: req.body.password,
-    });
+    bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
+      if (err) next(err);
 
-    if (!errors.isEmpty()) {
-      res.render("sign_up", {
-        title: "Sign up",
-        user: user,
-        errors: errors.array(),
+      const user = new User({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        userName: req.body.userName,
+        email: req.body.email,
+        password: hashedPassword,
       });
-    } else {
-      try {
-        await user.save();
-        res.redirect(user.url);
-      } catch (error) {
-        next(error);
+
+      if (!errors.isEmpty()) {
+        res.render("sign_up", {
+          title: "Sign up",
+          user: user,
+          errors: errors.array(),
+        });
+      } else {
+        try {
+          await user.save();
+          res.redirect("/users/login");
+        } catch (error) {
+          next(error);
+        }
       }
-    }
+    });
   },
 ];
 //-------------------------------------

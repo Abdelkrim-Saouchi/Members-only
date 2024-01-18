@@ -9,6 +9,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const MongoStore = require("connect-mongo");
 const User = require("./models/user");
+const bcrypt = require("bcryptjs");
 
 const indexRouter = require("./routes/index");
 const userRouter = require("./routes/user");
@@ -51,7 +52,8 @@ passport.use(
         if (!user) {
           return done(null, false, { message: "Incorrect Email" });
         }
-        if (user.password !== password) {
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
           return done(null, false, { message: "Incorrect password" });
         }
 
