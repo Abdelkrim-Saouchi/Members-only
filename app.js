@@ -1,10 +1,14 @@
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
-const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 require("dotenv").config();
+const session = require("express-session");
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
+const MongoStore = require("connect-mongo");
+const User = require("./models/user");
 
 const indexRouter = require("./routes/index");
 const userRouter = require("./routes/user");
@@ -15,12 +19,6 @@ const app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
-app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
-
 // Db connection
 mongoose.set("strictQuery", false);
 const dbUrl = process.env.DB_URL;
@@ -29,6 +27,59 @@ main().catch((err) => console.log(err));
 async function main() {
   await mongoose.connect(dbUrl);
 }
+
+app.use(
+  session({
+    secret: process.env.SECRET,
+    store: MongoStore.create({
+      mongoUrl: process.env.DB_URL,
+      collectionName: "sessions",
+    }),
+    resave: false,
+    saveUninitialized: true,
+  }),
+);
+passport.use(
+  new LocalStrategy(
+    {
+      usernameField: "email",
+      passwordField: "password",
+    },
+    async (username, password, done) => {
+      try {
+        const user = await User.findOne({ email: username });
+        if (!user) {
+          return done(null, false, { message: "Incorrect Email" });
+        }
+        if (user.password !== password) {
+          return done(null, false, { message: "Incorrect password" });
+        }
+
+        return done(null, user);
+      } catch (error) {
+        return done(error);
+      }
+    },
+  ),
+);
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (error) {
+    done(error);
+  }
+});
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/users", userRouter);

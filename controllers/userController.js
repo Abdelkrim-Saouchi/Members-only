@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const { body, validationResult } = require("express-validator");
+const passport = require("passport");
 
 // ------Sign up route-----------------
 // Get request to display Sign up form
@@ -67,13 +68,34 @@ exports.getLoginForm = (req, res) => {
   res.render("login", { title: "Login" });
 };
 
+// POST request to login
+exports.postLogin = passport.authenticate("local", {
+  successRedirect: "/",
+  failureRedirect: "/users/login",
+});
+
 //--------Other user routes ---------
+
+// GET info of specific user
 exports.userDetails = async (req, res, next) => {
-  console.log("id:", req.params.id);
+  if (!req.user) {
+    res.redirect("/");
+    return;
+  }
   const user = await User.findById(req.params.id).exec();
   if (!user) {
     const err = new Error("User does not exist");
     return next(err);
   }
   res.render("profile_page", { title: "Profile", user: user });
+};
+
+// Logout
+exports.logout = async (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
 };

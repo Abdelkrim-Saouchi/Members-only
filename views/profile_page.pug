@@ -2,8 +2,8 @@ extends layout
 
 block content 
   h2(class="mb-2 text-xl md:text-3xl font-bold") Welcome #[span(class="text-red-600") #{user.userName}]! 
-  h3(class="mb-2 text-lg md:text-xl font-bold") user information: 
-  div(class="p-6 border border-gray-100 shadow-lg") 
+  div(class="p-6 text-xl md:max-w-md border border-gray-100 shadow-lg") 
+    h3(class="mb-2 text-lg md:text-xl font-bold") user information: 
     p #[b First name:] #{user.firstName} 
     p #[b Last name:] #{user.lastName} 
     p #[b Email:] #{user.email} 
