@@ -68,7 +68,12 @@ exports.getLoginForm = (req, res) => {
 };
 
 //--------Other user routes ---------
-exports.userDetails = async (req, res) => {
+exports.userDetails = async (req, res, next) => {
   console.log("id:", req.params.id);
-  res.send(`info of user : ${req.params.id}`);
+  const user = await User.findById(req.params.id).exec();
+  if (!user) {
+    const err = new Error("User does not exist");
+    return next(err);
+  }
+  res.render("profile_page", { title: "Profile", user: user });
 };
