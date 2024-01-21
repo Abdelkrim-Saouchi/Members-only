@@ -1,0 +1,10 @@
+extends layout 
+
+block content 
+  h2(class="mb-2 text-xl md:text-3xl font-bold") Delete Message: #{message.title}
+  form(class="p-6 flex flex-col items-center border border-gray-100 rounded shadow-md md:min-w-96", action="", method="post")
+    input(type="hidden", id="messageId", value=(message._id), name="messageId") 
+    p Are you sure you want to delete this message ?
+    div(class="flex gap-4")
+      button(class="flex-1 py-2 px-6 mt-4 bg-black text-white font-bold rounded-lg border border-black hover:bg-white hover:text-black focus:bg-white focus:text-black", type="submit") Yes 
+      a(class= "flex-1 py-2 px-6 mt-4 bg-black text-white font-bold rounded-lg border border-black hover:bg-white hover:text-black focus:bg-white focus:text-black", href="/") No 

@@ -51,4 +51,8 @@ MessageSchema.virtual("timestamp").get(function () {
   return formattedTimestamp;
 });
 
+MessageSchema.virtual("url").get(function () {
+  return `/messages/${this._id}`;
+});
+
 module.exports = mongoose.model("Message", MessageSchema);

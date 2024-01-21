@@ -49,3 +49,48 @@ exports.createMessageFormPost = [
     }
   },
 ];
+
+// GET controller to get delete form
+exports.deleteMessageGet = async (req, res, next) => {
+  // Check if user is authenticated
+  if (!req.user) {
+    res.redirect("/");
+    return;
+  }
+  try {
+    const message = await Message.findById(req.params.id, "title").exec();
+    res.render("delete_form", {
+      title: "Delete Message",
+      message: message,
+      user: req.user,
+    });
+    return;
+  } catch (err) {
+    next(err);
+  }
+};
+
+// POST controller to delete message
+exports.deleteMessagePost = [
+  body("messageId", "Invalid id").trim().isLength({ min: 1 }).escape(),
+  async (req, res, next) => {
+    // Check if user is authenticated
+    if (!req.user) {
+      res.redirect("/");
+      return;
+    }
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.redirect("/");
+      return;
+    }
+
+    try {
+      
+      await Message.findByIdAndDelete(req.body.messageId);
+      res.redirect("/");
+    } catch (err) {
+      next(err);
+    }
+  },
+];
