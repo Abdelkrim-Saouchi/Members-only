@@ -23,6 +23,8 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  isMember: Boolean,
+  isAdmin: Boolean,
 });
 
 UserSchema.virtual("url").get(function () {

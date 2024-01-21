@@ -104,3 +104,84 @@ exports.logout = async (req, res, next) => {
     res.redirect("/");
   });
 };
+
+// POST controller to become a member
+exports.becomeMember = [
+  body("passCode", "Invalid pass!").trim().isLength({ min: 1 }).escape(),
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    const user = await User.findById(req.params.id).exec();
+    if (!user) {
+      const err = new Error("User not found");
+      return next(err);
+    }
+    if (!errors.isEmpty()) {
+      res.render("profile_page", {
+        title: "Profile",
+        user: user,
+        errors: errors.array(),
+      });
+      return;
+    }
+
+    // I prefer to store it in memory
+    const SECRET_CODE = "12df54kesAA";
+    if (SECRET_CODE === req.body.passCode) {
+      user.isMember = true;
+      try {
+        const updatedUser = await user.save();
+        res.redirect(updatedUser.url);
+        return;
+      } catch (err) {
+        return next(err);
+      }
+    } else {
+      res.render("profile_page", {
+        title: "Profile",
+        user: user,
+        errors: [{ msg: "PassCode incorrect!" }],
+      });
+    }
+  },
+];
+
+// POST controller to become an Admin
+exports.becomeAdmin = [
+  body("adminPass", "Invalid pass!").trim().isLength({ min: 1 }).escape(),
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    const user = await User.findById(req.params.id).exec();
+
+    if (!user) {
+      const err = new Error("User not found");
+      return next(err);
+    }
+    if (!errors.isEmpty()) {
+      res.render("profile_page", {
+        title: "Profile",
+        user: user,
+        errors: errors.array(),
+      });
+      return;
+    }
+
+    // I prefer to store it in memory
+    const SECRET_CODE = "12HHHDSRnbt";
+    if (SECRET_CODE === req.body.adminPass) {
+      user.isAdmin = true;
+      try {
+        const updatedUser = await user.save();
+        res.redirect(updatedUser.url);
+        return;
+      } catch (err) {
+        return next(err);
+      }
+    } else {
+      res.render("profile_page", {
+        title: "Profile",
+        user: user,
+        errors: [{ msg: "Admin pass incorrect!" }],
+      });
+    }
+  },
+];

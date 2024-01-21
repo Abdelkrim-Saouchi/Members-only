@@ -6,20 +6,39 @@ block content
     h3(class="mb-2 text-lg md:text-xl font-bold") user information: 
     p #[b First name:] #{user.firstName} 
     p #[b Last name:] #{user.lastName} 
-    p #[b Email:] #{user.email} 
+    p #[b Email:] #{user.email}
+    if !user.isMember 
+      p #[b Member:] not yet.
+    else 
+      p #[b Member:] Yes.
+    if !user.isAdmin 
+      p #[b Admin:] not yet.
+    else 
+      p #[b Admin:] Yes.
   br
-  div(class="p-6 my-3 flex flex-col gap-2 text-xl md:max-w-md border border-gray-100 shadow-lg") 
-    p if you want to become a member of this club, you must enter the pass code
-    p(class="opacity-80") #[b Hint:] you will find the pass code in #[a(href="https://github.com/Abdelkrim-Saouchi/Members-only", target="_blank", class="text-blue-800") my repo].
-    form(class="flex flex-col gap-2", action="", method="post")
-        input(class="px-4 py-1 outline-1 outline-slate-400 outline", type="text", name="passCode")
-        button(class="p-2 mt-4 bg-black text-white font-bold rounded-lg border border-black hover:bg-white hover:text-black focus:bg-white focus:text-black",type="submit") Become member 
+  if !user.isMember
+    div(class="p-6 my-3 flex flex-col gap-2 text-xl md:max-w-md border border-gray-100 shadow-lg") 
+      p if you want to become a member of this club, you must enter the pass code
+      p(class="opacity-80") #[b Hint:] you will find the pass code in #[a(href="https://github.com/Abdelkrim-Saouchi/Members-only", target="_blank", class="text-blue-800") my repo].
+      form(class="flex flex-col gap-2", action="", method="post")
+          input(class="px-4 py-1 outline-1 outline-slate-400 outline", type="text", name="passCode")
+          button(class="p-2 mt-4 bg-black text-white font-bold rounded-lg border border-black hover:bg-white hover:text-black focus:bg-white focus:text-black",type="submit") Become member
+      if errors 
+        ul(class="mt-2 mb-4 p-2 text-red-600 list-disc list-inside") 
+          for error in errors 
+            li!= error.msg  
   br
-  div(class="p-6 my-3 flex flex-col gap-2 text-xl md:max-w-md border border-gray-100 shadow-lg") 
-    p If you want to become an admin, you must enter the admin pass.
-    p(class="opacity-80") #[b Hint:] you will find also the pass in #[a(href="https://github.com/Abdelkrim-Saouchi/Members-only", target="_blank", class="text-blue-800") my repo].
-    form(class="flex flex-col gap-2", action="", method="post")
-        input(class="px-4 py-1 outline-1 outline-slate-400 outline", type="text", name="passCode")
-        button(class="p-2 mt-4 bg-black text-white font-bold rounded-lg border border-black hover:bg-white hover:text-black focus:bg-white focus:text-black",type="submit") Become Admin  
+
+  if !user.isAdmin
+    div(class="p-6 my-3 flex flex-col gap-2 text-xl md:max-w-md border border-gray-100 shadow-lg") 
+      p If you want to become an admin, you must enter the admin pass.
+      p(class="opacity-80") #[b Hint:] you will find also the pass in #[a(href="https://github.com/Abdelkrim-Saouchi/Members-only", target="_blank", class="text-blue-800") my repo].
+      form(class="flex flex-col gap-2", action=(user.url + '/admin'), method="post")
+          input(class="px-4 py-1 outline-1 outline-slate-400 outline", type="text", name="adminPass")
+          button(class="p-2 mt-4 bg-black text-white font-bold rounded-lg border border-black hover:bg-white hover:text-black focus:bg-white focus:text-black",type="submit") Become Admin 
+      if errors 
+          ul(class="mt-2 mb-4 p-2 text-red-600 list-disc list-inside") 
+            for error in errors 
+              li!= error.msg  
     
     
