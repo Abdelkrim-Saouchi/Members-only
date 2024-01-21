@@ -594,6 +594,10 @@ video {
   min-height: 100dvh;
 }
 
+.min-w-36 {
+  min-width: 9rem;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
