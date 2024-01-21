@@ -6,3 +6,14 @@ block content
   else 
     h2(class="mb-2 text-xl md:text-3xl font-bold") Welcome to our #[span(class="text-red-600") Private club]
   p(class="font-semibold") Please before joining the club read #[a(class="text-blue-600", href="/rules") the rules.]
+  a(href="/messages/create", class="p-2 mt-4 bg-black text-white font-bold rounded-lg border border-black hover:bg-white hover:text-black focus:bg-white focus:text-black") Create message
+
+  div(class="mt-6 p-6 border border-gray-100 rounded shadow-md md:w-1/2") 
+    h3(class="mb-2 md:text-2xl font-bold") Users messages: 
+    for message in messages 
+      div(class="p-3 my-4 flex gap-4 bg-gray-100 rounded") 
+        div(class="p-2 border-r-2 border-black") #[b #{message.user.userName}]
+        div(class="flex flex-col gap-2 grow") 
+          h4 #[b #{message.title}] 
+          p #{message.text} 
+          p(class="self-end opacity-60") #{message.timestamp}
