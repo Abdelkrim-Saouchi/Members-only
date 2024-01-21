@@ -50,7 +50,7 @@ exports.createUserPost = [
       if (!errors.isEmpty()) {
         res.render("sign_up", {
           title: "Sign up",
-          user: user,
+          userInfo: user,
           errors: errors.array(),
         });
       } else {

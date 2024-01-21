@@ -11,18 +11,18 @@ block content
   form(class="p-6 flex flex-col border border-gray-100 rounded shadow-md md:min-w-96", action="", method="post")
     div(class="flex flex-col mb-2") 
       label(class="opacity-70", for="firstName") First Name: 
-      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="John", type="text", id="firstName", name="firstName", value=(user === undefined? '' : user.firstName))
+      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="John", type="text", id="firstName", name="firstName", value=(userInfo === undefined? '' : userInfo.firstName))
     div(class="flex flex-col mb-2") 
       label(class="opacity-70", for="lastName") Last Name: 
-      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="Smith", type="text", id="lastName", name="lastName", value=(user === undefined? '' : user.lastName))
+      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="Smith", type="text", id="lastName", name="lastName", value=(userInfo === undefined? '' : userInfo.lastName))
 
     div(class="flex flex-col mb-2") 
       label(class="opacity-70", for="userName") Username: 
-      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="Thiazine", type="text", id="userName", name="userName", value=(user === undefined? '' : user.userName))
+      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="Thiazine", type="text", id="userName", name="userName", value=(userInfo === undefined? '' : userInfo.userName))
 
     div(class="flex flex-col mb-2") 
       label(class="opacity-70", for="email") Email: 
-      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="example@example.com", type="email", id="email", name="email", value=(user === undefined? '' : user.email)) 
+      input(class="px-2 py-1 rounded outline-slate-300 outline outline-1", placeholder="example@example.com", type="email", id="email", name="email", value=(userInfo === undefined? '' : userInfo.email)) 
 
     div(class="flex flex-col mb-2") 
       label(class="opacity-70", for="password") Password: 
