@@ -6,7 +6,7 @@ const Message = require("../models/message");
 router.get("/", async function (req, res, next) {
   try {
     const messages = await Message.find({}).populate("user").exec();
-    res.render("index", { user: req.user, messages: messages });
+    res.render("index", { title: "Home", user: req.user, messages: messages });
   } catch (err) {
     return next(err);
   }
