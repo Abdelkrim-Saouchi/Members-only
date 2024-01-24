@@ -9,12 +9,12 @@ block content
   if user
     a(href="/messages/create", class="p-2 mt-4 bg-black text-white font-bold rounded-lg border border-black hover:bg-white hover:text-black focus:bg-white focus:text-black") Create message
 
-  div(class="mt-6 p-6 border border-gray-100 rounded shadow-md md:w-1/2") 
+  div(class="mt-6 p-3 md:p-6 border border-gray-100 rounded shadow-md self-stretch md:self-center md:w-1/2") 
     h3(class="mb-2 md:text-2xl font-bold") Users messages: 
     for message in messages 
-      div(class="p-3 my-4 flex gap-4 bg-gray-100 rounded")
+      div(class="p-3 my-4 flex flex-col md:flex-row gap-4 bg-gray-100 rounded")
         if user && user.isMember 
-          div(class="p-2 min-w-36 border-r-2 border-black") #[b #{message.user.userName}]
+          div(class="p-2 min-w-36 border-b-2 md:border-r-2 border-black") #[b #{message.user.userName}]
         div(class="flex flex-col gap-2 grow")
           h4 #[b #{message.title}] 
           p #{message.text}

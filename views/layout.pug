@@ -7,7 +7,7 @@ html
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     link(rel='stylesheet', href='/stylesheets/style.css')
   body(class="flex flex-col min-h-dvh")
-    header(class="py-4 px-8 flex items-center justify-between gap-4 border-b border-gray-100 shadow-md z-10") 
+    header(class="py-4 px-3 md:px-8 flex items-center justify-between gap-4 border-b border-gray-100 shadow-md z-10") 
       h1(class="text-xl font-bold md:text-3xl") #[a(href="/") Private Club] 
       nav 
         ul(class="flex items-center gap-6 font-semibold")
@@ -23,7 +23,7 @@ html
               a(href="/users/sign-up", class="hover:opacity-60") Sign UP
             li 
               a(href="/users/login", class="hover:opacity-60") LogIn
-    main(class="py-4 px-8 grow flex flex-col items-center")
+    main(class="py-4 px-3 md:px-8 grow flex flex-col items-center")
       block content
     footer(class="py-4 px-8 flex items-center justify-center text-xl font-semibold bg-black")
       a(class="text-white hover:opacity-60", href="/") Created by Krimothiazine 
