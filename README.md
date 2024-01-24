@@ -8,7 +8,7 @@ You can use this pass code to became member in the private club: 12df54kesAA
 
 ## To become Admin
 
-To have Admin badge you have use this pass: 12HHHDSRnbt
+To have Admin badge you have to use this pass: 12HHHDSRnbt
 
 ### Live demo
 
