@@ -5,6 +5,11 @@ block content
   if errorMsg 
     div(class="mt-2 mb-4 p-2 text-red-600 border border-gray-100 rounded shadow-md md:min-w-96") 
       p!= errorMsg
+  
+  if errors 
+      ul(class="mt-2 mb-4 p-2 text-red-600 list-disc list-inside border border-gray-100 rounded shadow-md md:min-w-96") 
+        for error in errors 
+          li!= error.msg 
 
   form(class="p-6 flex flex-col border border-gray-100 rounded shadow-md md:min-w-96", action="", method="post")
     div(class="flex flex-col mb-2") 

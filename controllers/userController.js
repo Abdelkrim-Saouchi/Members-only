@@ -74,18 +74,26 @@ exports.getLoginForm = (req, res) => {
 };
 
 // POST request to login
-exports.postLogin = (req, res, next) => {
-  passport.authenticate("local", (err, user, info) => {
-    if (err) return next(err);
-    if (!user) {
-      return res.render("login", { title: "login", errorMsg: info.message });
+exports.postLogin = [
+  body("email", "Invalid email").trim().isLength({ min: 1 }).escape(),
+  body("password", "Invalid password").trim().escape(),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty) {
+      return res.render("login", { title: "Login", errors: errors.array() });
     }
-    req.login(user, (err) => {
+    passport.authenticate("local", (err, user, info) => {
       if (err) return next(err);
-      return res.redirect("/");
-    });
-  })(req, res, next);
-};
+      if (!user) {
+        return res.render("login", { title: "Login", errorMsg: info.message });
+      }
+      req.login(user, (err) => {
+        if (err) return next(err);
+        return res.redirect("/");
+      });
+    })(req, res, next);
+  },
+];
 
 //--------Other user routes ---------
 
