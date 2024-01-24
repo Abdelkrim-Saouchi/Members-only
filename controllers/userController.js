@@ -80,7 +80,10 @@ exports.postLogin = (req, res, next) => {
     if (!user) {
       return res.render("login", { title: "login", errorMsg: info.message });
     }
-    res.redirect("/");
+    req.login(user, (err) => {
+      if (err) return next(err);
+      return res.redirect("/");
+    });
   })(req, res, next);
 };
 
@@ -190,3 +193,8 @@ exports.becomeAdmin = [
     }
   },
 ];
+
+// GET controller to render rules page
+exports.getRules = (req, res, next) => {
+  res.render("rules", { title: "Club rules", user: req.user });
+};

@@ -26,4 +26,7 @@ router.post("/profile/:id/admin", userController.becomeAdmin);
 // GET request to logout
 router.get("/logout", userController.logout);
 
+// GET request to display rules page
+router.get("/rules", userController.getRules);
+
 module.exports = router;
