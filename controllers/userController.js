@@ -74,10 +74,15 @@ exports.getLoginForm = (req, res) => {
 };
 
 // POST request to login
-exports.postLogin = passport.authenticate("local", {
-  successRedirect: "/",
-  failureRedirect: "/users/login",
-});
+exports.postLogin = (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) {
+      return res.render("login", { title: "login", errorMsg: info.message });
+    }
+    res.redirect("/");
+  })(req, res, next);
+};
 
 //--------Other user routes ---------
 
